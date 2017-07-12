@@ -13,13 +13,42 @@ class Contact{
     // $this->welcome_message();
   }
 
+  public function delete_contact($id){
+    $sql = "DELETE FROM `contacts` WHERE contact_ID='$id';";
+    $result = mysqli_query($this->connection, $sql);
+    if(!$result){echo('*** Error DELETING Contact *** <br>');}
+  }
+
+  public function edit_contact($update_params){
+    $this->update_params($update_params);
+    $this->update_contact();
+  }
+
+  public function update_params($update_params){
+    $this->id         = $update_params['id'];
+    $this->email      = $update_params['email'];
+    $this->firstname  = $update_params['firstname'];
+    $this->lastname   = $update_params['lastname'];
+    $this->phone      = $update_params['phone'];
+  }
+
+  public function update_contact(){
+    $sql = "UPDATE `contacts` SET
+      `contact_email`     = '$this->email',
+      `contact_firstname` = '$this->firstname',
+      `contact_lastname`  = '$this->lastname',
+      `contact_phone`     = '$this->phone'
+      WHERE `contact_ID`  = '$this->id';";
+    $result = mysqli_query($this->connection, $sql);
+    if(!$result){echo('*** Error UPDATING Contact *** <br>');}
+  }
+
   public function create_contact($contact_params){
     $this->set_params($contact_params);
     $this->add_contact();
   }
 
   public function set_params($contact_params){
-    $this->id         = $contact_params['id'];
     $this->email      = $contact_params['email'];
     $this->firstname  = $contact_params['firstname'];
     $this->lastname   = $contact_params['lastname'];
@@ -35,7 +64,7 @@ class Contact{
       `contact_phone`,
       `contact_date_entered`
     ) VALUES (
-      '$this->id',
+      NULL,
       '$this->email',
       '$this->firstname',
       '$this->lastname',
@@ -55,6 +84,13 @@ class Contact{
     $sql = "SELECT * FROM `contacts` WHERE contact_ID='$id' LIMIT 1;";
     $result = mysqli_query($this->connection, $sql);
     return $this->get_contact_data($result);
+  }
+
+  public function get_fullname($id){
+    $sql = "SELECT * FROM `contacts` WHERE contact_ID='$id' LIMIT 1;";
+    $result = mysqli_query($this->connection, $sql);
+    $this->get_contact_data($result);
+    return $this->data['firstname'].' '.$this->data['lastname'];
   }
 
   public function get_contact_data($result){

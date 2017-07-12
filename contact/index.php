@@ -29,19 +29,24 @@ $con = $contacts_controller->show(5);
         <th>Phone</th>
         <th>Date Entered</th>
       </tr>
-      <?php foreach ($contacts as $contact) { ?>
+      <?php foreach ($contacts as $contact) {
+        $id = $contact['id'];
+        ?>
         <tr>
-          <td><?php echo($contact['id']);?></td>
+          <td><?php echo($id);?></td>
           <td><?php echo($contact['email']);?></td>
           <td><?php echo($contact['firstname']);?></td>
           <td><?php echo($contact['lastname']);?></td>
           <td><?php echo($contact['phone']);?></td>
           <td><?php echo($contact['date_entered']);?></td>
+          <td><a href="./show.php?contact_id=<?php echo($id);?>">View</a></td>
+          <td><a href="./edit.php?contact_id=<?php echo($id);?>">Update</a></td>
+          <td><a href="./delete.php?contact_id=<?php echo($id);?>">Delete</a></td>
         </tr>
         <?php } ?>
       </table>
-      <a href="./json" target="_blank">View JSON</a>
-      <div class="container">
+      <a href="./json" target="_blank">View JSON</a> | <a href="./new" target="_blank">Add Contact</a>
+      <!-- <div class="container">
         <h2>One Contact</h2>
         <table class="table">
           <p>
@@ -53,7 +58,7 @@ $con = $contacts_controller->show(5);
             <label>Date Entered: </label> <?php echo($con['date_entered'].'<br>'); ?>
           </p>
         </table>
-      </div>
+      </div> -->
     </div>
   </body>
   </html>

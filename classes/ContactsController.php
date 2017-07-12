@@ -15,20 +15,21 @@ class ContactsController{
   public function show($id){
     return $this->contact->get_one_contact($id);
   }
-  public function _new(){
-
-  }
+  // public function _new(){
+  //
+  // }
   public function edit($id){
     return $this->contact->get_one_contact($id);
   }
   public function create($contact_params){
     $this->contact->create_contact($contact_params);
   }
-  public function update($id){
-    return $this->contact->get_one_contact($id);
+  public function update($update_params){
+    $this->contact->edit_contact($update_params);
+
   }
   public function delete($id){
-    return $this->contact->get_one_contact($id);
+    return $this->contact->delete_contact($id);
   }
 
   public function welcome_message(){
